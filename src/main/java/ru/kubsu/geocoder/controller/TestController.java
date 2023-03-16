@@ -38,8 +38,13 @@ public class TestController {
         return service.load(name);
     }
 
-    @GetMapping(value = "/test", produces = APPLICATION_JSON_VALUE)
-    public NominatimPlace test() {
+    @GetMapping(value = "/search", produces = APPLICATION_JSON_VALUE)
+    public NominatimPlace search() {
         return nominatimClient.search("кубгу", "json").get(0);
+    }
+
+    @GetMapping(value = "/reverse", produces = APPLICATION_JSON_VALUE)
+    public NominatimPlace reverse(@RequestParam Double lat, @RequestParam Double lon) {
+        return nominatimClient.reverse(lat, lon, "json");
     }
 }
