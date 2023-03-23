@@ -73,9 +73,9 @@ class TestControllerTest {
 
         final RestApiError body = response.getBody();
         System.out.println(body);
-        assertEquals(400, body.getStatus());
-        assertEquals("Bad Request", body.getError());
-        assertEquals("/tests/check/abc", body.getPath());
+        assertEquals(400, body.status());
+        assertEquals("Bad Request", body.error());
+        assertEquals("/tests/check/abc", body.path());
     }
 
     @BeforeAll

@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "ru.vyarus.quality" version "4.9.0"
 }
 
 group = 'ru.kubsu'
@@ -15,10 +16,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	// implementation 'com.h2database:h2:2.1.214'
-    implementation 'org.postgresql:postgresql:42.5.4'
+	implementation 'com.h2database:h2:2.1.214'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2:2.1.214'
 }
 
 dependencyManagement {

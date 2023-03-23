@@ -1,7 +1,6 @@
 package ru.kubsu.geocoder.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.kubsu.geocoder.client.NominatimClient;
 import ru.kubsu.geocoder.dto.NominatimPlace;
@@ -38,13 +37,8 @@ public class TestController {
         return service.load(name);
     }
 
-    @GetMapping(value = "/search", produces = APPLICATION_JSON_VALUE)
-    public NominatimPlace search() {
+    @GetMapping(value = "/test", produces = APPLICATION_JSON_VALUE)
+    public NominatimPlace test() {
         return nominatimClient.search("кубгу", "json").get(0);
-    }
-
-    @GetMapping(value = "/reverse", produces = APPLICATION_JSON_VALUE)
-    public NominatimPlace reverse(@RequestParam Double lat, @RequestParam Double lon) {
-        return nominatimClient.reverse(lat, lon, "json");
     }
 }

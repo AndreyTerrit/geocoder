@@ -6,6 +6,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableFeignClients(basePackages = "ru.kubsu.geocoder")
 public class FeignConfig {
-
-
 }
