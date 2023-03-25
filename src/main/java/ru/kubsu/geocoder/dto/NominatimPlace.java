@@ -1,10 +1,15 @@
 package ru.kubsu.geocoder.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Objects;
-
-public record NominatimPlace (
+/**
+ *  Класс-модель для возвращаемых Nominatim данных.
+ *
+ * @param displayName Наименование объекта
+ * @param longitude  Долгота
+ * @param latitude Широта
+ * @param type Тип
+ */
+public record NominatimPlace(
     @JsonProperty("lat")
     Double latitude,
     @JsonProperty("lon")

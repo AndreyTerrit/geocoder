@@ -3,6 +3,9 @@ package ru.kubsu.geocoder.model;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ *  Класс Тест.
+ */
 @Entity
 public class Test {
     @Id
@@ -10,7 +13,7 @@ public class Test {
     private Integer id;
     @Column(name = "name", length = 50, nullable = false, unique = true)
     private String name;
-    private Boolean done;
+    private Boolean done = false;
 
     @Enumerated(EnumType.STRING)
     private Mark mark;
@@ -19,7 +22,7 @@ public class Test {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -27,7 +30,7 @@ public class Test {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -35,7 +38,7 @@ public class Test {
         return done;
     }
 
-    public void setDone(Boolean done) {
+    public void setDone(final Boolean done) {
         this.done = done;
     }
 
@@ -43,16 +46,23 @@ public class Test {
         return mark;
     }
 
-    public void setMark(Mark mark) {
+    public void setMark(final Mark mark) {
         this.mark = mark;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Test test = (Test) o;
-        return Objects.equals(id, test.id) && Objects.equals(name, test.name) && Objects.equals(done, test.done) && mark == test.mark;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Test test = (Test) o;
+        return Objects.equals(id, test.id)
+            && Objects.equals(name, test.name)
+            && Objects.equals(done, test.done)
+            && mark == test.mark;
     }
 
     @Override

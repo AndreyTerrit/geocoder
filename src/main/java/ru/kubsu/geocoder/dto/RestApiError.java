@@ -1,10 +1,20 @@
 package ru.kubsu.geocoder.dto;
 
-import java.util.Objects;
+import feign.Param;
 
-public record RestApiError (
+/**
+ *  DTO Для ошибки.
+ *
+ * @param error Ошибка
+ * @param status Статус
+ * @param path Путь
+ */
+public record RestApiError(
+    @Param
     Integer status,
+    @Param
     String error,
+    @Param
     String path
 ) {
     RestApiError() {

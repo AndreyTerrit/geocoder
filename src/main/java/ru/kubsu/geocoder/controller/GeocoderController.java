@@ -9,21 +9,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kubsu.geocoder.client.NominatimClient;
 import ru.kubsu.geocoder.dto.NominatimPlace;
-import ru.kubsu.geocoder.service.TestService;
-
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+/**
+ *  Контроллер для парсинга запросов на Nominatim.
+ */
 @RestController
 @RequestMapping("geocoder")
 public class GeocoderController {
-    private TestService service;
     private final NominatimClient nominatimClient;
 
     @Autowired
-    public GeocoderController(final TestService service, final NominatimClient nominatimClient) {
-        this.service = service;
+    public GeocoderController(final NominatimClient nominatimClient) {
         this.nominatimClient = nominatimClient;
     }
 
@@ -32,6 +30,14 @@ public class GeocoderController {
 
         return nominatimClient.search(address)
                 .map(p -> ResponseEntity.status(HttpStatus.OK)
+                .body(p)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping(value = "/reverse", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<NominatimPlace> reverse(final @RequestParam Double lat, final @RequestParam Double lon) {
+
+        return nominatimClient.reverse(lat, lon)
+            .map(p -> ResponseEntity.status(HttpStatus.OK)
                 .body(p)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }
