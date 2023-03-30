@@ -13,7 +13,7 @@ import ru.kubsu.geocoder.model.Address;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
- *  Контроллер для парсинга запросов на Nominatim.
+ *  Контроллер для проксирования запросов на Nominatim.
  */
 @RestController
 @RequestMapping("geocoder")
@@ -36,6 +36,6 @@ public class GeocoderController {
     public ResponseEntity<Address> reverse(final @RequestParam Double lat, final @RequestParam Double lon) {
         return addressService.reverse(lat, lon)
             .map(p -> ResponseEntity.status(HttpStatus.OK).body(p))
-            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_GATEWAY).build());
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

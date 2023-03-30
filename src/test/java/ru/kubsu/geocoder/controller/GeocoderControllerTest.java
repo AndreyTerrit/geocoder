@@ -19,6 +19,7 @@ import ru.kubsu.geocoder.repository.AddressRepository;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -73,11 +74,48 @@ class GeocoderControllerTest {
         assertNull(response.getBody());
     }
 
+    @Test
+    void reverse() {
+        final Double lat = 45.12345678;
+        final Double lon = 35.12345678912345;
+        final Address testAddress = buildTestAddress(lat, lon);
+        when(nominatimClient.reverse(anyDouble(), anyDouble()))
+            .thenReturn(Optional.of(buildTestPlace()));
+
+        ResponseEntity<Address> response = testRestTemplate.
+            getForEntity("http://localhost:" + PORT + "/geocoder/reverse?lat=" + lat + "&lon=" + lon, Address.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        final Address body = response.getBody();
+        assertEquals(testAddress, body);
+    }
+
+    @Test
+    void reverseWhenNominatimNotResponse() {
+        final Double lat = 45.12345678;
+        final Double lon = 35.12345678912345;
+        when(nominatimClient.reverse(anyDouble(), anyDouble()))
+            .thenReturn(Optional.empty());
+
+        ResponseEntity<Address> response = testRestTemplate.
+            getForEntity(
+                "http://localhost:" + PORT + "/geocoder/reverse?lat=" + lat + "&lon=" + lon,
+                Address.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+    }
+
     private static NominatimPlace buildTestPlace() {
         return new NominatimPlace (45.12345678, 35.12345678912345, "Кубанский государственный университет", "university");
     }
 
     private static Address buildTestAddress(final String query) {
         return Address.of(buildTestPlace(), query);
+    }
+
+    private static Address buildTestAddress(final Double lat, final Double lon) {
+        return Address.ofCoordinates(buildTestPlace(), lat, lon);
     }
 }

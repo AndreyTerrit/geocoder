@@ -111,4 +111,5 @@ public class Address {
         result.setQuery("");
         return result;
     }
+
 }
