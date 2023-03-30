@@ -32,12 +32,10 @@ public class GeocoderController {
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-
-    //@GetMapping(value = "/reverse", produces = APPLICATION_JSON_VALUE)
-    //public ResponseEntity<NominatimPlace> reverse(final @RequestParam Double lat, final @RequestParam Double lon) {
-    //
-    //    return nominatimClient.reverse(lat, lon)
-    //        .map(p -> ResponseEntity.status(HttpStatus.OK)
-    //            .body(p)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    //}
+    @GetMapping(value = "/reverse", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Address> reverse(final @RequestParam Double lat, final @RequestParam Double lon) {
+        return addressService.reverse(lat, lon)
+            .map(p -> ResponseEntity.status(HttpStatus.OK).body(p))
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_GATEWAY).build());
+    }
 }

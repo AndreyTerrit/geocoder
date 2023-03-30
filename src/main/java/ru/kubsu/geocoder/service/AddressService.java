@@ -30,4 +30,10 @@ public class AddressService {
             .or(() -> nominatimClient.search(query)
                 .map(p -> addressRepository.save(Address.of(p, query))));
     }
+
+    public Optional<Address> reverse(final Double lat, final Double lon) {
+        return addressRepository.findByLatitudeAndLongitude(lat, lon)
+            .or(() -> nominatimClient.reverse(lat, lon)
+                .map(p -> addressRepository.save(Address.ofCoordinates(p, lat, lon))));
+    }
 }

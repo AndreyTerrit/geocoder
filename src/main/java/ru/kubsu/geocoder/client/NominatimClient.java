@@ -56,6 +56,7 @@ public interface NominatimClient {
         try {
             return Optional.of(reverse(lat, lon, JSON_FORMAT));
         } catch (Exception ex) {
+            System.out.println("Error" + ex.toString());
             return Optional.empty();
         }
     }

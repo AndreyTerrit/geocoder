@@ -102,4 +102,13 @@ public class Address {
         result.setQuery(query);
         return result;
     }
+
+    public static Address ofCoordinates(final NominatimPlace place, final Double lat, final Double lon) {
+        final Address result = new Address();
+        result.setAddress(place.displayName());
+        result.setLatitude(lat);
+        result.setLongitude(lon);
+        result.setQuery("");
+        return result;
+    }
 }
